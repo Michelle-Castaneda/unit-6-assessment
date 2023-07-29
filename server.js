@@ -22,7 +22,7 @@ app.use(express.json());
 
 //Start with setting up your server to serve static files
 app.use(express.static(path.join(__dirname, 'public')));
-
+//res.sendFile(path.join(__dirname,'../public/index.html')) //*****Notes
 
 // Add up the total health of all the robots
 const calculateTotalHealth = (robots) =>
