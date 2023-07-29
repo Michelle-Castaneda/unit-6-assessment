@@ -54,7 +54,7 @@ app.get("/api/robots", (req, res) => {
     res.status(200).send(bots);
     rollbar.info('GET in /api/robots was successful') // rollbar info
   } catch (error) {
-    rollbar.error('There was an error in GET /api/robots') //rollbar error
+    rollbar.error('There was an error in GET /api/robots', error) //rollbar error
     console.error("ERROR GETTING BOTS", error);
     res.sendStatus(400);
   }
@@ -66,7 +66,7 @@ app.get("/api/robots/shuffled", (req, res) => {
     res.status(200).send(shuffled);
     rollbar.warning('GET in/api/robots/shuffled was called') // rollbar warning
   } catch (error) {
-    rollbar.error('There was an error in GET /api/robots/shuffled');
+    rollbar.error('There was an error in GET /api/robots/shuffled', error);
     console.error("ERROR GETTING SHUFFLED BOTS", error);
     res.sendStatus(400);
   }
