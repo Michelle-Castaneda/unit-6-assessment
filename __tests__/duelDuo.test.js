@@ -1,12 +1,12 @@
-const { Builder, Browser, By, until } = require("selenium-webdriver");
+const { Builder, Browser, By, until, } = require("selenium-webdriver");
 
 let driver;
 
-beforeAll(async () => {
+beforeEach(async () => {
   driver = await new Builder().forBrowser(Browser.CHROME).build();
 });
 
-afterAll(async () => {
+afterEach(async () => {
   await driver.quit();
 });
 
@@ -26,10 +26,20 @@ describe("Duel Duo tests", () => {
 
   test("when clicking an “Add to Duo” button displays the div with id = “player-duo”", async () => {
     await driver.get("http://localhost:8000");
-    await driver.findElement(By.xpath("//button[contains(text(), 'Add to Duo')]")).click();
-    let addDuo = await driver.findElement(By.id("player-duo"));
-    let displayDuo = await addDuo.isDisplayed();
-    expect(displayDuo).toBe(true);
-  }) 
+    await driver.wait(until.titleIs("Duel Duo"),5000)
+    //to populate the choices div
+    let drawButton = await driver.findElement(By.id("draw"));
+    await drawButton.click();
+    //wait for the bot car to be visible
+    await driver.wait(until.elementLocated(By.css('.bot-btn')), 5000);
+    // Click the "Add to Duo" button on the first bot card.
+    let addDuoButton = await driver.findElement(By.css('.bot-btn'));
+    await addDuoButton.click();
+
+    let playerDuoDiv = await driver.findElement(By.id("player-duo"));
+    let isPlayerDuoDivDisplayed = await playerDuoDiv.isDisplayed();
+    expect(isPlayerDuoDivDisplayed).toBe(true);
+  }); 
 
 });
+

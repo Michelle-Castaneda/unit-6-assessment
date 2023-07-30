@@ -54,7 +54,7 @@ app.get("/api/robots", (req, res) => {
     res.status(200).send(bots);
     rollbar.info('GET in /api/robots was successful') // rollbar info
   } catch (error) {
-    rollbar.error('There was an error in GET /api/robots', error) //rollbar error
+    rollbar.error('There was an error in GET /api/robots',error) //rollbar error
     console.error("ERROR GETTING BOTS", error);
     res.sendStatus(400);
   }
